@@ -1,5 +1,5 @@
 function Home(){
-    return <h1>"An Emperor, sovering of dominions vast, not by the crown he wears, but by the steadfatness of his spirit and the magnimity of his heart"</h1>
+    return <h1>"teste 4"</h1>
 }
 
 export default Home;
