@@ -17,8 +17,4 @@ function Home() {
   );
 }
 
-function teste() {
-  return none;
-}
-
 export default Home;
