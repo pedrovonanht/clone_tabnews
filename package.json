@@ -4,8 +4,10 @@
   "description": "Um clone do https://tabnews.com.br feito atráves do https://curso.dev do Filipe Deschamps.",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "docker-up": "docker compose --file 'infra/compose.yaml' up -d",
+    "dev": "npm run docker:up && next dev",
+    "docker:up": "docker compose --file 'infra/compose.yaml' up -d",
+    "docker:stop": "docker compose --file 'infra/compose.yaml' stop",
+    "docker:down": "docker compose --file 'infra/compose.yaml' down",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",
