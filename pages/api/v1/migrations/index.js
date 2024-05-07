@@ -20,9 +20,7 @@ export default async function migrations(request, response) {
     await dbClient.end();
     return response.status(200).json(pendingMigrations);
   }
-
   if (request.method === "POST") {
-    if (request.method === "POST") {
       const migratedMigrations = await MigrationRunner({
         ...defaultMigrationOptions,
         dryRun: false,
@@ -37,5 +35,5 @@ export default async function migrations(request, response) {
       return response.status(200).json(migratedMigrations);
     }
     return response.status(405).end();
-  }
+
 }
