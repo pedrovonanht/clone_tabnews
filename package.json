@@ -4,7 +4,7 @@
   "description": "Um clone do https://tabnews.com.br feito atráves do https://curso.dev do Filipe Deschamps.",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run docker:up && next dev",
+    "dev": "npm run docker:up && npm run wait-for-postgress && npm run migration:up && next dev",
     "docker:up": "docker compose --file 'infra/compose.yaml' up -d",
     "docker:stop": "docker compose --file 'infra/compose.yaml' stop",
     "docker:down": "docker compose --file 'infra/compose.yaml' down",
@@ -13,7 +13,8 @@
     "test": "jest --runInBand",
     "test:watch": "jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate -m infra/migrations create",
-    "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up"
+    "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",
+    "wait-for-postgress": "node infra/scripts/wait-for-postgress.js"
   },
   "author": "",
   "license": "MIT",
