@@ -9,7 +9,7 @@ function verifyPostgressConection () {
       verifyPostgressConection()
       return
     }
-    console.log("\n 🟢 Conexão aberta e pronta para receber conexões! \n")
+    console.log("\n🟢 Conexão aberta e pronta para receber conexões! \n")
   }
 }
 process.stdout.write("🔴 aguardando conexão com postgress...")

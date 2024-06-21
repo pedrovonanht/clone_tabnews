@@ -1,3 +1,11 @@
+import database from "infra/database.js";
+import orchestrator from "tests/orchestrator.js";
+
+beforeAll(async () => {
+  await database.query("drop schema public cascade; create schema public;");
+  await orchestrator.waitForAllServices()
+});
+
 test("GET to /api/v1/status should return 200", async () => {
   const response = await fetch("http://localhost:3000/api/v1/status");
   expect(response.status).toBe(200);
@@ -17,3 +25,4 @@ test("GET to /api/v1/status should return 200", async () => {
   expect(responseBody.dependencies.database.version).toEqual("16.0");
   expect(responseBody.dependencies.database.version).toBeDefined();
 });
+
