@@ -1,3 +1,11 @@
+import database from "infra/database.js";
+import orchestrator from "tests/orchestrator.js";
+
+beforeAll(async () => {
+  await database.query("drop schema public cascade; create schema public;");
+  await orchestrator.waitForAllServices()
+});
+
 test("bad method request should end connection and return 405", async () => {
   const migrationsResponse = await fetch("http://localhost:3000/api/v1/migrations", {
     method: "DELETE",
