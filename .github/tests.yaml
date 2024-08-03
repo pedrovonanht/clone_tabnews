@@ -1,6 +1,9 @@
 name: Automated Tests
 
-on: pull_request
+on: 
+  pull_request:
+    types: [opened, reopened]
+
 
 jobs:
   jest:
@@ -9,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      with:
+        with:
         node-version: "lts/hydrogen"
       - run: npm ci
       - run: npm test
