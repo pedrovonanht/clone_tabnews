@@ -1,4 +1,4 @@
-name: Automated Tests
+name: Automated-Tests
 
 on: pull_request
 
@@ -15,4 +15,4 @@ jobs:
       
       - run: npm ci
 
-      - run: npm testg
+      - run: npm test
