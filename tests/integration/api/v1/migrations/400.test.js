@@ -2,8 +2,8 @@ import database from "infra/database.js";
 import orchestrator from "tests/orchestrator.js";
 
 beforeAll(async () => {
-  await database.query("drop schema public cascade; create schema public;");
   await orchestrator.waitForAllServices()
+  await database.query("drop schema public cascade; create schema public;");
 });
 
 test("bad method request should end connection and return 405", async () => {
