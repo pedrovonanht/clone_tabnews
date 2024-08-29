@@ -2,7 +2,7 @@ import database from "infra/database.js";
 import orchestrator from "tests/orchestrator.js";
 
 beforeAll(async () => {
-  await orchestrator.waitForAllServices()
+  await orchestrator.waitForAllServices();
 });
 
 test("GET to /api/v1/status should return 200", async () => {
@@ -24,4 +24,3 @@ test("GET to /api/v1/status should return 200", async () => {
   expect(responseBody.dependencies.database.version).toEqual("16.0");
   expect(responseBody.dependencies.database.version).toBeDefined();
 });
-
