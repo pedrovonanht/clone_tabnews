@@ -4,7 +4,7 @@
   "description": "Um clone do https://tabnews.com.br feito atráves do https://curso.dev do Filipe Deschamps.",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && concurrently -n dev,docker -c blue,green \"next dev\" \"node infra/scripts/stop-services.js\"",
+    "dev": "node infra/scripts/run-dev.js",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "test:watch": "jest --watchAll --runInBand",
     "services:up": "docker compose --file 'infra/compose.yaml' up -d",
