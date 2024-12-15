@@ -10,7 +10,7 @@
     "services:up": "docker compose --file 'infra/compose.yaml' up -d",
     "services:stop": "docker compose --file 'infra/compose.yaml' stop",
     "services:down": "docker compose --file 'infra/compose.yaml' down",
-    "services:wait:database" : "node infra/scripts/wait-for-postgress.js",
+    "services:wait:database": "node infra/scripts/wait-for-postgress.js",
     "migrations:create": "node-pg-migrate -m infra/migrations create",
     "migrations:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",
     "lint:prettier:check": "prettier --check .",
