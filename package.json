@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node infra/scripts/run-dev.js",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
-    "test:watch": "jest --watchAll --runInBand",
+    "test:watch": "jest --watchAll --runInBand --verbose",
     "services:up": "docker compose --file 'infra/compose.yaml' up -d",
     "services:stop": "docker compose --file 'infra/compose.yaml' stop",
     "services:down": "docker compose --file 'infra/compose.yaml' down",
