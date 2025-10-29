@@ -21,7 +21,6 @@ function onErrorHandler(error, request, response) {
     cause: error,
   });
 
-  console.log("\n Erro dentro do catch do next-connect: ");
   console.error(publicErrorObject);
 
   response.status(500).json(publicErrorObject);
