@@ -1,4 +1,4 @@
-//cria conexão com o Banco de Dados
+//cria conexão com o Banco de dados
 import { Client } from "pg";
 import { ServiceError } from "./errors";
 
