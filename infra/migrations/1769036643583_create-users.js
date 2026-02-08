@@ -6,7 +6,7 @@ exports.up = (pgm) => {
       default: pgm.func("gen_random_uuid()")
     },
 
-    //for reference, Github limits username characters to 39
+    // for reference, Github limits username characters to 39
     username: {
       type: "varchar(30)",
       notNull: true,
