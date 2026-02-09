@@ -63,7 +63,7 @@ export class ValidationError extends Error {
       cause,
     });
     this.name = "ValidationError";
-    this.action = action || "Ajuste os dados enviados e tente novamente."
+    this.action = action || "Ajuste os dados enviados e tente novamente.";
     this.statusCode = 400;
   }
 
@@ -82,7 +82,8 @@ export class NotFoundError extends Error {
       cause,
     });
     this.name = "NotFoundError";
-    this.action = action || "Verifique se os parametros enviados na consulta estão certos."
+    this.action =
+      action || "Verifique se os parametros enviados na consulta estão certos.";
     this.statusCode = 404;
   }
 

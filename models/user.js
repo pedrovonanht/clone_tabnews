@@ -2,20 +2,20 @@ import database from "infra/database.js";
 import { ValidationError, NotFoundError } from "infra/errors";
 async function create(userInputValues) {
   await validateUniqueEmail(userInputValues.email);
-  await validateUniqueUsername(userInputValues.username)
+  await validateUniqueUsername(userInputValues.username);
 
   const newUser = await runInsertQuery(userInputValues);
   return newUser;
 }
 
-async function findOneByUsername (username) {
-  const userFound = await runSelectQuery(username)
+async function findOneByUsername(username) {
+  const userFound = await runSelectQuery(username);
 
   return userFound;
 
   async function runSelectQuery(username) {
-  const results = await database.query({
-    text: `
+    const results = await database.query({
+      text: `
     SELECT
       *
     FROM
@@ -25,20 +25,18 @@ async function findOneByUsername (username) {
     LIMIT
       1
       ;`,
-      values: [username]
-  });
-  if (results.rowCount === 0) {
-   throw new NotFoundError({
-      message: "O username informado não foi encontrado no sistema",
-      action: "verifique o nome do usuário informado.",
-    })}
+      values: [username],
+    });
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O username informado não foi encontrado no sistema",
+        action: "verifique o nome do usuário informado.",
+      });
+    }
 
-  return results.rows[0];
+    return results.rows[0];
   }
 }
-
-
-
 
 async function validateUniqueEmail(email) {
   const results = await database.query({
@@ -50,13 +48,13 @@ async function validateUniqueEmail(email) {
     WHERE
       LOWER(email) = LOWER($1)
       ;`,
-      values: [email]
+    values: [email],
   });
   if (results.rowCount > 0) {
     throw new ValidationError({
       message: "O email informado já está sendo utilizado.",
-      action: "Utilize outro email para realizar o cadastro."
-    })
+      action: "Utilize outro email para realizar o cadastro.",
+    });
   }
 }
 
@@ -70,13 +68,13 @@ async function validateUniqueUsername(username) {
     WHERE
       LOWER(username) = LOWER($1)
       ;`,
-      values: [username]
+    values: [username],
   });
   if (results.rowCount > 0) {
     throw new ValidationError({
       message: "O username informado já está sendo utilizado.",
-      action: "Utilize outro username para realizar o cadastro."
-    })
+      action: "Utilize outro username para realizar o cadastro.",
+    });
   }
 }
 

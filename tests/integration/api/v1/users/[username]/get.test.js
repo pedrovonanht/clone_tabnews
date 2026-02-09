@@ -8,7 +8,6 @@ beforeAll(async () => {
 });
 describe("GET /api/v1/users/[username]", () => {
   describe("Anonymous user", () => {
-
     test("With exact case match", async () => {
       const response1 = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
@@ -21,10 +20,12 @@ describe("GET /api/v1/users/[username]", () => {
           password: "senha123",
         }),
       });
-      expect(response1.status).toBe(201); 
+      expect(response1.status).toBe(201);
 
-      const response2 = await fetch("http://localhost:3000/api/v1/users/MesmoCase");
-      expect(response2.status).toBe(200); 
+      const response2 = await fetch(
+        "http://localhost:3000/api/v1/users/MesmoCase",
+      );
+      expect(response2.status).toBe(200);
 
       const response2Body = await response2.json();
       expect(response2Body).toEqual({
@@ -52,10 +53,12 @@ describe("GET /api/v1/users/[username]", () => {
           password: "senha123",
         }),
       });
-      expect(response1.status).toBe(201); 
+      expect(response1.status).toBe(201);
 
-      const response2 = await fetch("http://localhost:3000/api/v1/users/casediferente");
-      expect(response2.status).toBe(200); 
+      const response2 = await fetch(
+        "http://localhost:3000/api/v1/users/casediferente",
+      );
+      expect(response2.status).toBe(200);
 
       const response2Body = await response2.json();
       expect(response2Body).toEqual({
@@ -72,15 +75,17 @@ describe("GET /api/v1/users/[username]", () => {
       expect(Date.parse(response2Body.updated_at)).not.toBeNaN();
     });
     test("With nonexistent username", async () => {
-      const response2 = await fetch("http://localhost:3000/api/v1/users/usuarioInexistente");
-      expect(response2.status).toBe(404); 
+      const response2 = await fetch(
+        "http://localhost:3000/api/v1/users/usuarioInexistente",
+      );
+      expect(response2.status).toBe(404);
 
       const response2Body = await response2.json();
       expect(response2Body).toEqual({
         name: "NotFoundError",
         message: "O username informado não foi encontrado no sistema",
         action: "verifique o nome do usuário informado.",
-        statusCode: 404
+        statusCode: 404,
       });
     });
   });

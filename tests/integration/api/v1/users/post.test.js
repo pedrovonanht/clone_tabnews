@@ -62,14 +62,13 @@ describe("POST /api/v1/users", () => {
       });
       expect(response2.status).toBe(400); //espero um response created status
 
-      const response2Body = await response2.json()
+      const response2Body = await response2.json();
       expect(response2Body).toEqual({
         name: "ValidationError",
         action: "Utilize outro email para realizar o cadastro.",
         message: "O email informado já está sendo utilizado.",
         statusCode: 400,
-      })
-      
+      });
     });
     test("Duplicated 'username'", async () => {
       const response1 = await fetch("http://localhost:3000/api/v1/users", {
@@ -97,15 +96,13 @@ describe("POST /api/v1/users", () => {
       });
       expect(response2.status).toBe(400); //espero um response created status
 
-      const response2Body = await response2.json()
+      const response2Body = await response2.json();
       expect(response2Body).toEqual({
         name: "ValidationError",
         action: "Utilize outro username para realizar o cadastro.",
         message: "O username informado já está sendo utilizado.",
         statusCode: 400,
-      })
-      
+      });
     });
-
   });
 });
