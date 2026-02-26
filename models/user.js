@@ -25,7 +25,7 @@ async function update(username, userInputValues) {
   }
 
   if ("password" in userInputValues) {
-    await hashPasswordInObject(userInputValues)
+    await hashPasswordInObject(userInputValues);
   }
 
   const userWithNewValues = { ...currentUser, ...userInputValues };
