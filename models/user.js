@@ -4,7 +4,7 @@ import { ValidationError, NotFoundError } from "infra/errors";
 async function create(userInputValues) {
   await validateUniqueUsername(userInputValues.username);
   await validateUniqueEmail(userInputValues.email);
-  await validatePassword(userInputValues.password)
+  await validatePassword(userInputValues.password);
   await hashPasswordInObject(userInputValues);
 
   const newUser = await runInsertQuery(userInputValues);
@@ -12,28 +12,28 @@ async function create(userInputValues) {
 }
 async function update(username, userInputValues) {
   const currentUser = await findOneByUsername(username);
-  
+
   if (
     "username" in userInputValues &&
     username.toLowerCase() !== userInputValues.username.toLowerCase()
   ) {
     await validateUniqueUsername(userInputValues.username);
   }
-  
+
   if ("email" in userInputValues) {
     await validateUniqueEmail(userInputValues.email);
   }
-  
+
   if ("password" in userInputValues) {
     await hashPasswordInObject(userInputValues);
   }
-  
+
   const userWithNewValues = { ...currentUser, ...userInputValues };
-  
+
   const updatedUser = await runUpdateQuery(userWithNewValues);
-  
+
   return updatedUser;
-  
+
   async function runUpdateQuery(userWithNewValues) {
     const results = await database.query({
       text: `
@@ -56,16 +56,16 @@ async function update(username, userInputValues) {
         userWithNewValues.password,
       ],
     });
-    
+
     return results.rows[0];
   }
 }
 
 async function findOneByUsername(username) {
   const userFound = await runSelectQuery(username);
-  
+
   return userFound;
-  
+
   async function runSelectQuery(username) {
     const results = await database.query({
       text: `
@@ -86,7 +86,7 @@ async function findOneByUsername(username) {
         action: "verifique o nome do usuário informado.",
       });
     }
-    
+
     return results.rows[0];
   }
 }
@@ -134,9 +134,9 @@ async function validateUniqueUsername(username) {
 function validatePassword(password) {
   if (password === undefined) {
     throw new ValidationError({
-        message: "O campo password é obrigatório.",
-        action: "Crie uma senha para realizar esta operação."
-      })
+      message: "O campo password é obrigatório.",
+      action: "Crie uma senha para realizar esta operação.",
+    });
   }
 }
 async function hashPasswordInObject(userInputValues) {
