@@ -4,12 +4,12 @@ import { ValidationError, NotFoundError } from "infra/errors";
 async function create(userInputValues) {
   await validateUniqueUsername(userInputValues.username);
   await validateUniqueEmail(userInputValues.email);
+  await validatePassword(userInputValues.password);
   await hashPasswordInObject(userInputValues);
 
   const newUser = await runInsertQuery(userInputValues);
   return newUser;
 }
-
 async function update(username, userInputValues) {
   const currentUser = await findOneByUsername(username);
 
@@ -38,14 +38,14 @@ async function update(username, userInputValues) {
     const results = await database.query({
       text: `
       UPDATE
-        users
+      users
       SET
-        username = $2,
-        email =$3,
-        password =$4,
-        updated_at = timezone('utc', now())
+      username = $2,
+      email =$3,
+      password =$4,
+      updated_at = timezone('utc', now())
       WHERE 
-        id=$1
+      id=$1
       RETURNING
       *
       `,
@@ -69,13 +69,13 @@ async function findOneByUsername(username) {
   async function runSelectQuery(username) {
     const results = await database.query({
       text: `
-    SELECT
+      SELECT
       *
-    FROM
+      FROM
       users
-    WHERE
+      WHERE
       LOWER(username) = LOWER($1)
-    LIMIT
+      LIMIT
       1
       ;`,
       values: [username],
@@ -95,12 +95,12 @@ async function validateUniqueEmail(email) {
   const results = await database.query({
     text: `
     SELECT
-      email
+    email
     FROM
-      users
+    users
     WHERE
-      LOWER(email) = LOWER($1)
-      ;`,
+    LOWER(email) = LOWER($1)
+    ;`,
     values: [email],
   });
   if (results.rowCount > 0) {
@@ -115,12 +115,12 @@ async function validateUniqueUsername(username) {
   const results = await database.query({
     text: `
     SELECT
-      username
+    username
     FROM
-      users
+    users
     WHERE
-      LOWER(username) = LOWER($1)
-      ;`,
+    LOWER(username) = LOWER($1)
+    ;`,
     values: [username],
   });
   if (results.rowCount > 0) {
@@ -131,6 +131,14 @@ async function validateUniqueUsername(username) {
   }
 }
 
+function validatePassword(password) {
+  if (password === undefined) {
+    throw new ValidationError({
+      message: "O campo password é obrigatório.",
+      action: "Crie uma senha para realizar esta operação.",
+    });
+  }
+}
 async function hashPasswordInObject(userInputValues) {
   const hashedPassword = await password.hash(userInputValues.password);
   userInputValues.password = hashedPassword;
