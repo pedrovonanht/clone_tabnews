@@ -121,7 +121,6 @@ async function findOneByEmail(email) {
   }
 }
 
-
 async function validateUniqueEmail(email) {
   const results = await database.query({
     text: `
@@ -198,7 +197,7 @@ const user = {
   create,
   findOneByUsername,
   update,
-  findOneByEmail
+  findOneByEmail,
 };
 
 export default user;

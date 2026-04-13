@@ -16,12 +16,11 @@ exports.up = (pgm) => {
       type: "uuid",
       notNull: true,
     },
-    
+
     expires_at: {
       type: "timestamptz",
       notNull: true,
     },
-
 
     // Why timestamp with timezone? https://justatheory.com/2012/04/postgres-use-timestamptz/
     created_at: {
