@@ -38,14 +38,14 @@ async function update(username, userInputValues) {
     const results = await database.query({
       text: `
       UPDATE
-      users
+        users
       SET
-      username = $2,
-      email =$3,
-      password =$4,
-      updated_at = timezone('utc', now())
+        username = $2,
+        email =$3,
+        password =$4,
+        updated_at = timezone('utc', now())
       WHERE 
-      id=$1
+        id=$1
       RETURNING
       *
       `,
@@ -84,6 +84,35 @@ async function findOneByUsername(username) {
       throw new NotFoundError({
         message: "O username informado não foi encontrado no sistema",
         action: "verifique o nome do usuário informado.",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+async function findOneById(id) {
+  const userFound = await runSelectQuery(id);
+
+  return userFound;
+
+  async function runSelectQuery(id) {
+    const results = await database.query({
+      text: `
+      SELECT
+      *
+      FROM
+      users
+      WHERE
+      id = $1
+      LIMIT
+      1
+      ;`,
+      values: [id],
+    });
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O id informado não foi encontrado no sistema",
+        action: "verifique o id está digitado corretamente.",
       });
     }
 
@@ -195,6 +224,7 @@ async function runInsertQuery(userInputValues) {
 
 const user = {
   create,
+  findOneById,
   findOneByUsername,
   update,
   findOneByEmail,
