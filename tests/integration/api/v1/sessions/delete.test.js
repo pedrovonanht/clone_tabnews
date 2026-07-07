@@ -32,7 +32,7 @@ describe("GET /api/v1/user", () => {
         user_id: sessionObject.user_id,
         expires_at: responseBody.expires_at,
         updated_at: responseBody.updated_at,
-        created_at: responseBody.created_at
+        created_at: responseBody.created_at,
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
@@ -54,20 +54,23 @@ describe("GET /api/v1/user", () => {
       });
       expect(parsedSetCookie.session_id).toEqual({
         name: "session_id",
-        value: 'invalid',
+        value: "invalid",
         maxAge: -1,
         path: "/",
         httpOnly: true,
       });
 
       // Double-Check-Assertions
-      const doubleCheckResponse = await fetch("http://localhost:3000/api/v1/user", {
-        headers: {
-          "Cookie": `session_id=${sessionObject.token}`
-        }
-      })
+      const doubleCheckResponse = await fetch(
+        "http://localhost:3000/api/v1/user",
+        {
+          headers: {
+            Cookie: `session_id=${sessionObject.token}`,
+          },
+        },
+      );
 
-      expect(doubleCheckResponse.status).toBe(401)
+      expect(doubleCheckResponse.status).toBe(401);
       const doubleCheckResponseBody = await doubleCheckResponse.json();
 
       expect(doubleCheckResponseBody).toEqual({
