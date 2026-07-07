@@ -65,10 +65,13 @@ describe("GET /api/v1/user", () => {
       const createdUser = await orchestrator.createUser({
         username: "userWithExpiringSession",
       });
-      const ONE_MINUTE_IN_MILISSECONDS = 60 * 100
+      const ONE_MINUTE_IN_MILISSECONDS = 60 * 100;
       jest.useFakeTimers({
-        now: new Date(Date.now() - (session.EXPIRATIONS_IN_MILLISECONDS - ONE_MINUTE_IN_MILISSECONDS))
-      })
+        now: new Date(
+          Date.now() -
+            (session.EXPIRATIONS_IN_MILLISECONDS - ONE_MINUTE_IN_MILISSECONDS),
+        ),
+      });
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       jest.useRealTimers();
